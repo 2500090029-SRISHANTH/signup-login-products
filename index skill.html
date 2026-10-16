@@ -1,0 +1,77 @@
+ 
+<!DOCTYPE html>
+<html>
+<body>
+
+<div id="loginPage">
+<h2>Signup / Login</h2>
+
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+
+<button onclick="signup()">Signup</button>
+<button onclick="login()">Login</button>
+
+<p id="msg"></p>
+</div>
+
+<div id="productPage" style="display:none;">
+<h2 id="success"></h2>
+<h2>Our Products</h2>
+
+<h3>Mobile - ₹15,000</h3>
+<button onclick="alert('Mobile selected')">Buy Now</button>
+
+<h3>Laptop - ₹45,000</h3>
+<button onclick="alert('Laptop selected')">Buy Now</button>
+
+<h3>Headphones - ₹1,500</h3>
+<button onclick="alert('Headphones selected')">Buy Now</button>
+
+<br><br>
+<button onclick="logout()">Logout</button>
+</div>
+
+<script>
+function signup() {
+  if (user.value === "" || pass.value === "") {
+    msg.innerHTML = "Enter username and password";
+    return;
+  }
+
+  if (localStorage.getItem("user_" + user.value) !== null) {
+    msg.innerHTML = "Username already exists";
+    return;
+  }
+
+  localStorage.setItem("user_" + user.value, pass.value);
+  msg.innerHTML = "Signup successful! Now login.";
+}
+
+function login() {
+  if (
+    localStorage.getItem("user_" + user.value) !== null &&
+    localStorage.getItem("user_" + user.value) === pass.value &&
+    pass.value !== ""
+  ) {
+    document.getElementById("loginPage").style.display = "none";
+    document.getElementById("productPage").style.display = "block";
+    document.getElementById("success").innerHTML =
+      "Login successful! Welcome " + user.value;
+  } else {
+    msg.innerHTML = "Invalid username or password";
+  }
+}
+
+function logout() {
+  document.getElementById("productPage").style.display = "none";
+  document.getElementById("loginPage").style.display = "block";
+
+  user.value = "";
+  pass.value = "";
+  msg.innerHTML = "Logged out successfully. Another user can sign in.";
+}
+</script>
+
+</body>
+</html>
